@@ -1,0 +1,52 @@
+<template>
+    <transition  mode="out-in">
+        <div class="tip" v-show="isTip">
+            <slot></slot>
+        </div>
+    </transition>
+</template>
+
+<script>
+let timer = null
+export default {
+    data(){
+        return{
+            isTip:false
+        }
+    },
+    methods:{
+        showTip(){
+            this.isTip = true
+            if(timer){
+                clearTimeout(timer)
+            }
+            timer = setTimeout(()=>{
+                this.hideTip()
+            },3000)
+        },
+        hideTip(){
+            this.isTip = false
+        }
+    },
+}
+</script>
+
+<style lang="less" scoped>
+.v-enter,
+.v-leave-to{
+    transform: translateY(-1rem);
+}
+.v-enter-active,
+.v-leave-active{
+    transition: transform linear 0.3s;
+}
+.tip {
+    position: fixed;
+    top:1.2rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+</style>
